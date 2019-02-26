@@ -23,16 +23,17 @@ public class Position {
         this.y = y;
     }
 
-    public void moveUp(){
-        this.y-=1;
+    public Position moveUp(){
+        return new Position(this.getX(), this.getY() - 1);
     }
-    public void moveDown(){
-        this.y+=1;
+    public Position moveDown(){
+        return new Position(this.getX(), this.getY() + 1);
     }
-    public void moveRight(){
-        this.x+=1;
+    public Position moveRight(){
+        return new Position(this.getX() + 1, this.getY());
     }
-    public void moveLeft(){
-        this.y-=1;
+    public Position moveLeft(){
+        return new Position(this.getX()- 1, this.getY() - 1);
     }
+
 }

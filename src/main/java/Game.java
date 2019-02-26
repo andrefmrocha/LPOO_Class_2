@@ -42,20 +42,23 @@ public class Game {
         this.processKey(key);
     }
 
+    private void moveHero(Position pos){
+        this.character.setPosition(pos);
+    }
     private void processKey(KeyStroke key) throws IOException {
         switch (key.getKeyType())
         {
             case ArrowUp:
-                this.character.moveUp();
+                moveHero(character.moveUp());
                 break;
             case ArrowDown:
-                this.character.moveDown();
+                moveHero(character.moveDown());
                 break;
             case ArrowLeft:
-                this.character.moveLeft();
+                moveHero(character.moveLeft());
                 break;
             case ArrowRight:
-                this.character.moveRight();
+                moveHero(character.moveRight());
                 break;
             case Character:
                 if(key.getCharacter() == 'q')

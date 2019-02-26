@@ -33,7 +33,7 @@ public class Position {
         return new Position(this.getX() + 1, this.getY());
     }
     public Position moveLeft(){
-        return new Position(this.getX()- 1, this.getY() - 1);
+        return new Position(this.getX()- 1, this.getY());
     }
 
 }

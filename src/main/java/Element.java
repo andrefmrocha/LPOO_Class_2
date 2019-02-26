@@ -10,4 +10,15 @@ public class Element {
     protected  void draw(TextGraphics graphics){
         graphics.putString(new TerminalPosition(this.pos.getX(), this.pos.getY()), "X");
     }
+
+    public int getX(){
+        return this.pos.getX();
+    }
+    public int getY(){
+        return this.pos.getY();
+    }
+
+    public boolean equals(Position pos) {
+        return this.getX() == pos.getX() && this.getY() == pos.getY();
+    }
 }

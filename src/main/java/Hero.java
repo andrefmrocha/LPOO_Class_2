@@ -41,7 +41,7 @@ public class Hero extends Element{
         this.pos = pos;
     }
     public void draw(TextGraphics graphics){
-        graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
+        graphics.setForegroundColor(TextColor.Factory.fromString("#FFFFFF"));
         graphics.enableModifiers(SGR.BOLD);
         super.draw(graphics);
     }

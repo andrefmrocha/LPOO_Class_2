@@ -12,7 +12,7 @@ import static com.googlecode.lanterna.input.KeyType.ArrowUp;
 
 public class Game {
     private Screen screen;
-    private TextCharacter character;
+    private Hero character;
     private int x = 10;
     private int y = 10;
 
@@ -23,12 +23,12 @@ public class Game {
         screen.setCursorPosition(null);
         screen.startScreen();
         screen.doResizeIfNecessary();
-        this.character = new TextCharacter('X');
+        this.character = new Hero(10,10);
     }
 
     private void draw() throws IOException{
         screen.clear();
-        screen.setCharacter(x, y, this.character);
+        this.character.draw(screen);
         screen.refresh();
     }
 
@@ -38,7 +38,6 @@ public class Game {
         do{
             key = screen.readInput();
             this.processKey(key);
-
         }while (key.getKeyType() != KeyType.EOF);
         this.processKey(key);
     }
@@ -47,16 +46,16 @@ public class Game {
         switch (key.getKeyType())
         {
             case ArrowUp:
-                this.y-=1;
+                this.character.moveUp();
                 break;
             case ArrowDown:
-                this.y+=1;
+                this.character.moveDown();
                 break;
             case ArrowLeft:
-                this.x-=1;
+                this.character.moveLeft();
                 break;
             case ArrowRight:
-                this.x+=1;
+                this.character.moveRight();
                 break;
             case Character:
                 if(key.getCharacter() == 'q')

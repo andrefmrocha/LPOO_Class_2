@@ -45,6 +45,11 @@ public class Game {
             Thread.sleep(3000);
             screen.close();
         }
+        catch (Finish f){
+            System.out.println("Congraturations!");
+            Thread.sleep(3000);
+            screen.close();
+        }
     }
 
     private void draw() throws IOException{

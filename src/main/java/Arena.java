@@ -17,6 +17,8 @@ public class Arena {
     private List<Wall> walls;
     private List<Coin> coins;
     private List<Monster> monsters;
+    private Score score;
+    private int maxCoins = 5;
 
     Arena(int width, int height){
         this.width = width;
@@ -26,24 +28,27 @@ public class Arena {
         this.coins = this.createCoins();
         this.monsters = new ArrayList<>();
         this.counter = 0;
+        this.score = new Score(10, 25);
     }
 
     private boolean canObjectMove(Position pos){
         return pos.getX() >= 1 && pos.getX() < width - 1 && pos.getY() >= 1 && pos.getY() < height - 1;
     }
 
-    private void checkCoins(Position pos){
+    private void checkCoins(Position pos) throws Finish {
         for(Coin coin: this.coins){
             if(coin.equals(pos))
             {
                 this.coins.remove(coin);
+                if(this.score.scored() == this.maxCoins)
+                    throw new Finish();
                 break;
             }
 
         }
     }
 
-    private void moveHero(Position pos){
+    private void moveHero(Position pos) throws Finish {
         if(this.canObjectMove(pos))
         {
             this.checkCoins(pos);
@@ -73,13 +78,14 @@ public class Arena {
         for(Monster monster: this.monsters)
             monster.draw(graphics);
         this.character.draw(graphics);
+        this.score.draw(graphics);
     }
 
 
     private List<Coin> createCoins(){
         Random random = new Random();
         List<Coin> coins = new ArrayList<>();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < this.maxCoins; i++)
             coins.add(new Coin(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
         return coins;
     }
@@ -100,7 +106,7 @@ public class Arena {
         }
     }
 
-    protected void processKey(KeyStroke key) throws Collision {
+    protected void processKey(KeyStroke key) throws Collision, Finish {
         this.counter++;
         if(this.counter % 5 == 0){
             this.counter = 0;

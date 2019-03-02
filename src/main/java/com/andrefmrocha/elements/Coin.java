@@ -1,8 +1,10 @@
+package com.andrefmrocha.elements;
+
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
 public class Coin extends Element {
-    Coin(int x, int y){
+    public Coin(int x, int y){
         super(x, y);
     }
 

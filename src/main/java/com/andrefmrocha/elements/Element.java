@@ -1,3 +1,5 @@
+package com.andrefmrocha.elements;
+
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.graphics.TextGraphics;
 

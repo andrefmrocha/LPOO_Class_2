@@ -1,3 +1,5 @@
+package com.andrefmrocha.elements;
+
 public class MovableElement extends Element {
     MovableElement(int x, int y){
         super(x, y);

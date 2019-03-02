@@ -1,3 +1,4 @@
+import com.andrefmrocha.elements.*;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
@@ -52,7 +53,7 @@ public class Arena {
 
     private void verifyMonsterCollisions(Position pos) throws Collision {
         if(this.character.equals(pos)){
-            System.out.println("Monster: " +  pos.getX() + pos.getY());
+            System.out.println("com.andrefmrocha.elements.Monster: " +  pos.getX() + pos.getY());
             throw new Collision();
         }
     }
@@ -89,41 +90,13 @@ public class Arena {
     }
 
     private void moveMonsters() throws Collision {
-        Random random = new Random();
         Iterator<Monster> it= this.monsters.iterator();
         while (it.hasNext()){
             Monster monster = it.next();
-            int randInt = random.nextInt(3);
-            switch (randInt){
-                case 0:
-                    if(this.canObjectMove(monster.moveUp())){
-                        moveMonster(monster, monster.moveUp());
-                    }
-                    else
-                        it.remove();
-                    break;
-                case 1:
-                    if(this.canObjectMove(monster.moveDown())){
-                        moveMonster(monster, monster.moveDown());
-                    }
-                    else
-                        it.remove();
-                    break;
-                case 2:
-                    if(this.canObjectMove(monster.moveRight())){
-                        moveMonster(monster, monster.moveRight());
-                    }
-                    else
-                        it.remove();
-                    break;
-                case 3:
-                    if(this.canObjectMove(monster.moveLeft())){
-                        moveMonster(monster, monster.moveLeft());
-                    }
-                    else
-                        it.remove();
-                    break;
-            }
+            if(this.canObjectMove(monster.move())){
+                moveMonster(monster, monster.move());
+            }else
+                it.remove();
         }
     }
 

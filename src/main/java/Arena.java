@@ -4,15 +4,18 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 public class Arena {
     private int width;
+    private int counter;
     private int height;
     private Hero character;
     private List<Wall> walls;
     private List<Coin> coins;
+    private List<Monster> monsters;
 
     Arena(int width, int height){
         this.width = width;
@@ -20,9 +23,11 @@ public class Arena {
         this.character = new Hero(10,10);
         this.walls = createWalls();
         this.coins = this.createCoins();
+        this.monsters = new ArrayList<>();
+        this.counter = 0;
     }
 
-    private boolean canHeroMove(Position pos){
+    private boolean canObjectMove(Position pos){
         return pos.getX() >= 1 && pos.getX() < width - 1 && pos.getY() >= 1 && pos.getY() < height - 1;
     }
 
@@ -38,11 +43,23 @@ public class Arena {
     }
 
     private void moveHero(Position pos){
-        if(this.canHeroMove(pos))
+        if(this.canObjectMove(pos))
         {
             this.checkCoins(pos);
             this.character.setPosition(pos);
         }
+    }
+
+    private void verifyMonsterCollisions(Position pos) throws Collision {
+        if(this.character.equals(pos)){
+            System.out.println("Monster: " +  pos.getX() + pos.getY());
+            throw new Collision();
+        }
+    }
+
+    private void moveMonster(Monster monster, Position pos) throws Collision {
+        verifyMonsterCollisions(pos);
+        monster.setPosition(pos);
     }
 
     protected void draw(TextGraphics graphics){
@@ -52,6 +69,8 @@ public class Arena {
             wall.draw(graphics);
         for(Coin coin: this.coins)
             coin.draw(graphics);
+        for(Monster monster: this.monsters)
+            monster.draw(graphics);
         this.character.draw(graphics);
     }
 
@@ -64,7 +83,57 @@ public class Arena {
         return coins;
     }
 
-    protected void processKey(KeyStroke key) {
+    private void createMonster(){
+        Random random = new Random();
+        this.monsters.add(new Monster(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
+    }
+
+    private void moveMonsters() throws Collision {
+        Random random = new Random();
+        Iterator<Monster> it= this.monsters.iterator();
+        while (it.hasNext()){
+            Monster monster = it.next();
+            int randInt = random.nextInt(3);
+            switch (randInt){
+                case 0:
+                    if(this.canObjectMove(monster.moveUp())){
+                        moveMonster(monster, monster.moveUp());
+                    }
+                    else
+                        it.remove();
+                    break;
+                case 1:
+                    if(this.canObjectMove(monster.moveDown())){
+                        moveMonster(monster, monster.moveDown());
+                    }
+                    else
+                        it.remove();
+                    break;
+                case 2:
+                    if(this.canObjectMove(monster.moveRight())){
+                        moveMonster(monster, monster.moveRight());
+                    }
+                    else
+                        it.remove();
+                    break;
+                case 3:
+                    if(this.canObjectMove(monster.moveLeft())){
+                        moveMonster(monster, monster.moveLeft());
+                    }
+                    else
+                        it.remove();
+                    break;
+            }
+        }
+    }
+
+    protected void processKey(KeyStroke key) throws Collision {
+        this.counter++;
+        if(this.counter % 5 == 0){
+            this.counter = 0;
+            this.createMonster();
+        }
+        this.moveMonsters();
         switch (key.getKeyType())
         {
             case ArrowUp:

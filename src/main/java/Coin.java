@@ -8,6 +8,6 @@ public class Coin extends Element {
 
     public void draw(TextGraphics graphics){
         graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF00"));
-        super.draw(graphics);
+        super.draw(graphics, "O");
     }
 }

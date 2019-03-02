@@ -8,7 +8,7 @@ public class Wall extends Element{
 
     protected void draw(TextGraphics graphics){
         graphics.setForegroundColor(TextColor.Factory.fromString("#C71585"));
-        super.draw(graphics);
+        super.draw(graphics, "X");
     }
 
 }

@@ -3,7 +3,7 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
-public class Hero extends Element{
+public class Hero extends MovableElement{
     Hero(int x, int y){
         super(x, y);
     }
@@ -23,26 +23,10 @@ public class Hero extends Element{
         this.pos.setY(y);
     }
 
-    public Position moveUp(){
-        return this.pos.moveUp();
-    }
 
-    public Position moveDown(){
-        return this.pos.moveDown();
-    }
-    public Position moveRight(){
-        return this.pos.moveRight();
-    }
-    public Position moveLeft(){
-        return this.pos.moveLeft();
-    }
-
-    public void setPosition(Position pos){
-        this.pos = pos;
-    }
     public void draw(TextGraphics graphics){
         graphics.setForegroundColor(TextColor.Factory.fromString("#FFFFFF"));
         graphics.enableModifiers(SGR.BOLD);
-        super.draw(graphics);
+        super.draw(graphics, "T");
     }
 }

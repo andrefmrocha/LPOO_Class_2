@@ -7,8 +7,8 @@ public class Element {
         this.pos = new Position(x, y);
     }
 
-    protected  void draw(TextGraphics graphics){
-        graphics.putString(new TerminalPosition(this.pos.getX(), this.pos.getY()), "X");
+    protected  void draw(TextGraphics graphics, String character){
+        graphics.putString(new TerminalPosition(this.pos.getX(), this.pos.getY()), character);
     }
 
     public int getX(){

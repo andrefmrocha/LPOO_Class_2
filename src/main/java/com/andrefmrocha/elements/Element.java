@@ -9,8 +9,8 @@ public class Element {
         this.pos = new Position(x, y);
     }
 
-    protected  void draw(TextGraphics graphics, String character){
-        graphics.putString(new TerminalPosition(this.pos.getX(), this.pos.getY()), character);
+    protected  void draw(TextGraphics graphics, String character, TerminalPosition pos){
+        graphics.putString(pos, character);
     }
 
     public int getX(){

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class Arena {
+public class Arena implements GameWorld{
     private int width;
     private int counter;
     private int height;
@@ -68,7 +68,7 @@ public class Arena {
         monster.setPosition(pos);
     }
 
-    protected void draw(TextGraphics graphics){
+    public void draw(TextGraphics graphics){
         graphics.setBackgroundColor(TextColor.Factory.fromString("#11051b"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
         for(Wall wall: this.walls)
@@ -106,7 +106,7 @@ public class Arena {
         }
     }
 
-    protected void processKey(KeyStroke key) throws Collision, Finish {
+    public void processKey(KeyStroke key) throws GameException{
         this.counter++;
         if(this.counter % 5 == 0){
             this.counter = 0;

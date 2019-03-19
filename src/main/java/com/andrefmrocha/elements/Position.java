@@ -38,4 +38,9 @@ public class Position {
         return new Position(this.getX()- 1, this.getY());
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Position newPos = (Position) obj;
+        return this.getX() == newPos.getX() && this.getY() == newPos.getY();
+    }
 }

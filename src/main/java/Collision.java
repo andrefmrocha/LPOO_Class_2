@@ -1,5 +1,6 @@
-public class Collision extends Exception {
-    Collision(){
-        super();
+public class Collision extends GameException {
+    @Override
+    public String message() {
+        return "You lost! Good luck next time";
     }
 }

@@ -1,5 +1,6 @@
 package com.andrefmrocha.elements;
 
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
@@ -15,7 +16,6 @@ public class Score extends Element{
 
     public void draw(TextGraphics graphics){
         graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF00"));
-        super.draw(graphics, "Score: " + score);
-
+        super.draw(graphics, "Score: " + score, new TerminalPosition(this.getX(), this.getY()));
     }
 }

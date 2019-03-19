@@ -1,7 +1,3 @@
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -13,11 +9,11 @@ import java.io.IOException;
 
 
 public class Game {
-    private Arena arena;
+    private GameWorld gameWorld;
     private Screen screen;
 
     Game() throws IOException {
-        arena = new Arena(50, 20);
+        gameWorld = new Arena(50, 20);
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
 
         this.screen = new TerminalScreen(terminal);
@@ -32,7 +28,7 @@ public class Game {
         try{
             do{
                 key = screen.readInput();
-                this.arena.processKey(key);
+                this.gameWorld.processKey(key);
                 this.draw();
                 if(key.getKeyType() == KeyType.Character)
                 {
@@ -40,13 +36,8 @@ public class Game {
                         screen.close();
                 }
             }while (key.getKeyType() != KeyType.EOF);
-        } catch (Collision e){
-            System.out.println("You lost! Good luck next time");
-            Thread.sleep(3000);
-            screen.close();
-        }
-        catch (Finish f){
-            System.out.println("Congraturations!");
+        } catch (GameException e){
+            System.out.println(e.message());
             Thread.sleep(3000);
             screen.close();
         }
@@ -54,7 +45,7 @@ public class Game {
 
     private void draw() throws IOException{
         screen.clear();
-        this.arena.draw(screen.newTextGraphics());
+        this.gameWorld.draw(screen.newTextGraphics());
         screen.refresh();
     }
 

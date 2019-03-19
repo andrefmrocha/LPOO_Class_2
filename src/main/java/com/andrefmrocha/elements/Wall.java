@@ -1,5 +1,6 @@
 package com.andrefmrocha.elements;
 
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
@@ -10,7 +11,7 @@ public class Wall extends Element{
 
     public void draw(TextGraphics graphics){
         graphics.setForegroundColor(TextColor.Factory.fromString("#C71585"));
-        super.draw(graphics, "X");
+        super.draw(graphics, "X", new TerminalPosition(this.pos.getX(), this.pos.getY()));
     }
 
 }

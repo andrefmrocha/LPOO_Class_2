@@ -1,6 +1,7 @@
 package com.andrefmrocha.elements;
 
 import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
@@ -38,19 +39,19 @@ public class Monster extends MovableElement {
         graphics.enableModifiers(SGR.BOLD);
         switch (this.monsterType){
             case 1:
-                this.draw(graphics, "U");
+                this.draw(graphics, "U", new TerminalPosition(this.pos.getX(), this.pos.getY()));
                 break;
 
             case 2:
-                this.draw(graphics, "D");
+                this.draw(graphics, "D", new TerminalPosition(this.pos.getX(), this.pos.getY()));
                 break;
 
             case 3:
-                this.draw(graphics, "R");
+                this.draw(graphics, "R", new TerminalPosition(this.pos.getX(), this.pos.getY()));
                 break;
 
             case 4:
-               this.draw(graphics, "L");
+               this.draw(graphics, "L", new TerminalPosition(this.pos.getX(), this.pos.getY()));
                 break;
 
         }

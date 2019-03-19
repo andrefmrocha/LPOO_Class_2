@@ -16,6 +16,5 @@ public class Score extends Element{
 
     public void draw(TextGraphics graphics){
         graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF00"));
-        super.draw(graphics, "Score: " + score, new TerminalPosition(this.getX(), this.getY()));
     }
 }

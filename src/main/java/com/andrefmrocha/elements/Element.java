@@ -3,14 +3,14 @@ package com.andrefmrocha.elements;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
-public class Element {
+public class Element implements Drawable{
     protected Position pos;
     Element(int x, int y){
         this.pos = new Position(x, y);
     }
 
-    protected  void draw(TextGraphics graphics, String character, TerminalPosition pos){
-        graphics.putString(pos, character);
+    public void draw(TextGraphics graphics){
+        graphics.putString(new TerminalPosition(this.pos.getX(), this.pos.getY()), "X");
     }
 
     public int getX(){

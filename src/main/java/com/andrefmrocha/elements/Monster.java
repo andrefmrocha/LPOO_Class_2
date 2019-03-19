@@ -37,23 +37,6 @@ public class Monster extends MovableElement {
     public void draw(TextGraphics graphics){
         graphics.setForegroundColor(TextColor.Factory.fromString("#DC143C"));
         graphics.enableModifiers(SGR.BOLD);
-        switch (this.monsterType){
-            case 1:
-                this.draw(graphics, "U", new TerminalPosition(this.pos.getX(), this.pos.getY()));
-                break;
-
-            case 2:
-                this.draw(graphics, "D", new TerminalPosition(this.pos.getX(), this.pos.getY()));
-                break;
-
-            case 3:
-                this.draw(graphics, "R", new TerminalPosition(this.pos.getX(), this.pos.getY()));
-                break;
-
-            case 4:
-               this.draw(graphics, "L", new TerminalPosition(this.pos.getX(), this.pos.getY()));
-                break;
-
-        }
+        super.draw(graphics);
     }
 }

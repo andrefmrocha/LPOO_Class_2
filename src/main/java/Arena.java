@@ -14,9 +14,7 @@ public class Arena implements GameWorld{
     private int counter;
     private int height;
     private Hero character;
-    private List<Wall> walls;
-    private List<Coin> coins;
-    private List<Monster> monsters;
+    private List<Drawable> drawings;
     private Score score;
     private int maxCoins = 5;
 
@@ -24,9 +22,9 @@ public class Arena implements GameWorld{
         this.width = width;
         this.height = height;
         this.character = new Hero(10,10);
-        this.walls = createWalls();
-        this.coins = this.createCoins();
-        this.monsters = new ArrayList<>();
+        this.drawings = new ArrayList<>();
+        this.createWalls();
+        this.createCoins();
         this.counter = 0;
         this.score = new Score(10, 25);
     }
@@ -36,13 +34,16 @@ public class Arena implements GameWorld{
     }
 
     private void checkCoins(Position pos) throws Finish {
-        for(Coin coin: this.coins){
-            if(coin.equals(pos))
-            {
-                this.coins.remove(coin);
-                if(this.score.scored() == this.maxCoins)
-                    throw new Finish();
-                break;
+        for(Drawable drawing: this.drawings){
+            if(drawing.getClass().equals(Coin.class)){
+                Coin coin = (Coin) drawing;
+                if(coin.equals(pos))
+                {
+                    this.drawings.remove(coin);
+                    if(this.score.scored() == this.maxCoins)
+                        throw new Finish();
+                    break;
+                }
             }
 
         }
@@ -71,38 +72,36 @@ public class Arena implements GameWorld{
     public void draw(TextGraphics graphics){
         graphics.setBackgroundColor(TextColor.Factory.fromString("#11051b"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
-        for(Wall wall: this.walls)
-            wall.draw(graphics);
-        for(Coin coin: this.coins)
-            coin.draw(graphics);
-        for(Monster monster: this.monsters)
-            monster.draw(graphics);
+        for(Drawable drawing: this.drawings)
+            drawing.draw(graphics);
         this.character.draw(graphics);
         this.score.draw(graphics);
     }
 
 
-    private List<Coin> createCoins(){
+    private void createCoins(){
         Random random = new Random();
-        List<Coin> coins = new ArrayList<>();
         for (int i = 0; i < this.maxCoins; i++)
-            coins.add(new Coin(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
-        return coins;
+            drawings.add(new Coin(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
     }
 
     private void createMonster(){
         Random random = new Random();
-        this.monsters.add(new Monster(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
+        this.drawings.add(new Monster(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
     }
 
     private void moveMonsters() throws Collision {
-        Iterator<Monster> it= this.monsters.iterator();
+        Iterator<Drawable> it= this.drawings.iterator();
         while (it.hasNext()){
-            Monster monster = it.next();
-            if(this.canObjectMove(monster.move())){
-                moveMonster(monster, monster.move());
-            }else
-                it.remove();
+            Drawable drawable = it.next();
+            if(drawable.getClass().equals(Monster.class))
+            {
+                Monster monster = (Monster) drawable;
+                if(this.canObjectMove(monster.move())){
+                    moveMonster(monster, monster.move());
+                }else
+                    it.remove();
+            }
         }
     }
 
@@ -130,17 +129,15 @@ public class Arena implements GameWorld{
         }
     }
 
-    private List<Wall> createWalls(){
-        List<Wall> walls = new ArrayList<>();
+    private void createWalls(){
         for(int c = 0; c < width; c++){
-            walls.add(new Wall(c, 0));
-            walls.add(new Wall(c, this.height - 1));
+            drawings.add(new Wall(c, 0));
+            drawings.add(new Wall(c, this.height - 1));
         }
         for(int w = 0; w < height - 1; w++){
-            walls.add(new Wall(0, w));
-            walls.add(new Wall(this.width - 1, w));
+            drawings.add(new Wall(0, w));
+            drawings.add(new Wall(this.width - 1, w));
         }
-        return walls;
     }
 
 }
